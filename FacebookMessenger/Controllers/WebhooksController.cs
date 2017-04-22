@@ -32,7 +32,7 @@ namespace FacebookMessenger.Controllers
         {
             if (hubVerifyToken == webhookOptions.VerifyToken)
             {
-                logger.LogDebug("Tokens match: {0}", hubVerifyToken);
+                logger.LogInformation("Tokens match: {0}", hubVerifyToken);
                 return hubChallenge;
             }
 
@@ -73,11 +73,11 @@ namespace FacebookMessenger.Controllers
                         if (evt.message)
                         {
                             //todo
-                            logger.LogDebug("Webook received message event.");
+                            logger.LogInformation("Webook received message event.");
                         }
                         else
                         {
-                            logger.LogDebug("Webhook received unknown event: ", (string)evt);
+                            logger.LogInformation("Webhook received unknown event: ", (string)evt);
                         }
                     }
                 }
