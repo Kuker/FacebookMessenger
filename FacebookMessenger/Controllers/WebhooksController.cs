@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using FacebookMessenger.JsonModels;
 using FacebookMessenger.Options;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -59,7 +60,16 @@ namespace FacebookMessenger.Controllers
             }
 
             logger.LogInformation("Successfully read json from request body: {0}", json);
-            dynamic data = JsonConvert.DeserializeObject(json);
+
+            FacebookRequestModel data = new FacebookRequestModel();
+            try
+            {
+                data = JsonConvert.DeserializeObject<FacebookRequestModel>(json);
+            }
+            catch (Exception e)
+            {
+                logger.LogError("Could not convert json to {0}. {1}", nameof(FacebookRequestModel), e);
+            }
 
             if (data.@object == "page")
             {
@@ -70,14 +80,14 @@ namespace FacebookMessenger.Controllers
 
                     foreach (var evt in entry.messaging)
                     {
-                        if (evt.message)
+                        if (evt.message != null)
                         {
                             //todo
-                            logger.LogInformation("Webook received message event.");
+                            logger.LogInformation("Webook received message event. Message text: {0}",evt.message.text);
                         }
                         else
                         {
-                            logger.LogInformation("Webhook received unknown event: ", (string)evt);
+                            logger.LogInformation("Webhook received unknown event");
                         }
                     }
                 }
