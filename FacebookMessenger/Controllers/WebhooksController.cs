@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FacebookMessenger.JsonModels;
 using FacebookMessenger.Options;
+using FacebookMessenger.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -19,10 +20,12 @@ namespace FacebookMessenger.Controllers
     {
         private readonly WebhookOptions webhookOptions;
         private readonly ILogger<WebhooksController> logger;
+        private readonly IMessageRepository messageRepository;
 
-        public WebhooksController(IOptions<WebhookOptions> webhookOptions, ILogger<WebhooksController> logger)
+        public WebhooksController(IOptions<WebhookOptions> webhookOptions, ILogger<WebhooksController> logger, IMessageRepository messageRepository)
         {
             this.logger = logger;
+            this.messageRepository = messageRepository;
             this.webhookOptions = webhookOptions.Value;
         }
 
@@ -83,6 +86,12 @@ namespace FacebookMessenger.Controllers
                         if (evt.message != null)
                         {
                             //todo
+                            var message = new Models.Message
+                            {
+                                SenderId = evt.recipient.id,
+                                Text = evt.message.text
+                            };
+                            messageRepository.AddMessage(message);
                             logger.LogInformation("Webook received message event. Message text: {0}",evt.message.text);
                         }
                         else
