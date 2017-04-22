@@ -58,7 +58,7 @@ namespace FacebookMessenger.Controllers
                 return;
             }
 
-            logger.LogDebug("Successfully read json from request body: {0}", json);
+            logger.LogInformation("Successfully read json from request body: {0}", json);
             dynamic data = JsonConvert.DeserializeObject(json);
 
             if (data.@object == "page")
