@@ -30,6 +30,8 @@ namespace FacebookMessenger
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +43,13 @@ namespace FacebookMessenger
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "Default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
