@@ -13,6 +13,9 @@
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Data.OData" Version="5.8.2" />
+    <PackageReference Include="Microsoft.Data.Services.Client" Version="5.8.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
