@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FacebookMessenger.Options;
+using FacebookMessenger.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -32,6 +33,8 @@ namespace FacebookMessenger
         {
             services.AddOptions();
             services.Configure<WebhookOptions>(Configuration.GetSection(nameof(WebhookOptions)));
+
+            services.AddSingleton<IMessageRepository, MessageRepository>();
 
             services.AddMvc();
         }
